@@ -1,0 +1,201 @@
+/* ============================================
+   BASE: variables, reset, typography
+   ============================================ */
+
+:root {
+  /* premium dark palette */
+  --bg: #07111f;
+  --bg-alt: #0d1b2a;
+  --surface: #11233a;
+  --surface-2: #18314d;
+  --border: rgba(152, 176, 212, 0.18);
+  --border-strong: rgba(152, 176, 212, 0.28);
+
+  --text: #edf6ff;
+  --text-dim: #c3d0e5;
+  --text-faint: #7d8ca8;
+
+  --primary: #68e1d7;
+  --secondary: #6d7dff;
+  --accent: #ffb45f;
+  --highlight: #ff6fb2;
+  --sky: #7dd3fc;
+
+  --primary-glow: rgba(104, 225, 215, 0.30);
+  --secondary-glow: rgba(109, 125, 255, 0.30);
+  --accent-glow: rgba(255, 180, 95, 0.25);
+  --highlight-glow: rgba(255, 111, 178, 0.1);
+  --sky-glow: rgba(125, 211, 252, 0.1);
+  --body-glow-a: rgba(109, 125, 255, 0.18);
+  --body-glow-b: rgba(104, 225, 215, 0.12);
+  --glass: rgba(18, 23, 41, 0.62);
+  --glass-strong: rgba(18, 23, 41, 0.82);
+  --white-glow: rgba(255, 255, 255, 0.12);
+  --shadow-color: rgba(0, 0, 0, 0.6);
+  --hero-overlay: rgba(7, 17, 31, 0.78);
+  --hero-overlay-mid: rgba(7, 17, 31, 0.5);
+  --hero-overlay-end: rgba(7, 17, 31, 0.9);
+  --canvas-opacity: 0.55;
+
+  --amber: var(--accent);
+  --amber-dim: #d99439;
+  --teal: var(--primary);
+  --violet: var(--secondary);
+
+  /* -- type -- */
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-sans: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+
+  /* -- layout -- */
+  --max-width: 1120px;
+  --section-pad: clamp(4.5rem, 9vw, 8rem);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, var(--body-glow-a), transparent 28%),
+    radial-gradient(circle at top right, var(--body-glow-b), transparent 34%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  color-scheme: dark;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#bg-canvas {
+  opacity: var(--canvas-opacity);
+}
+
+body::before {
+  top: -8rem;
+  right: -8rem;
+  background: rgba(109, 125, 255, 0.9);
+  animation: drift-orb 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  left: -8rem;
+  bottom: -10rem;
+  background: rgba(104, 225, 215, 0.82);
+  animation: drift-orb 22s ease-in-out infinite alternate-reverse;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  color: var(--text-dim);
+  max-width: 62ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img, svg {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--amber);
+  color: #10131f;
+}
+
+/* focus visibility — accessible by default */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--amber);
+  color: #10131f;
+  padding: 0.6rem 1rem;
+  z-index: 999;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* fluid section title */
+.section-title {
+  font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+  margin-bottom: 2.2rem;
+  max-width: 20ch;
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 2.5rem);
+}

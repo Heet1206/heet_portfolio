@@ -1,0 +1,90 @@
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes drift-orb {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-30px, 30px, 0) scale(1.15); }
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-160%) rotate(18deg); }
+  100% { transform: translateX(420%) rotate(18deg); }
+}
+
+@keyframes signal-pulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.75; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* scroll reveal: one deliberate entrance per section, not per element.
+   Only apply the hidden starting state once js-ready is on <html> —
+   see the inline script in <head>. If JS never runs, content is
+   simply visible by default rather than stuck at opacity 0. */
+.js-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.js-ready [data-reveal].in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-ready .hero-text.in-view > * {
+  animation: hero-rise 0.7s var(--ease) both;
+}
+
+.js-ready .hero-text.in-view > *:nth-child(2) { animation-delay: 80ms; }
+.js-ready .hero-text.in-view > *:nth-child(3) { animation-delay: 140ms; }
+.js-ready .hero-text.in-view > *:nth-child(4) { animation-delay: 200ms; }
+.js-ready .hero-text.in-view > *:nth-child(5) { animation-delay: 260ms; }
+.js-ready .hero-text.in-view > *:nth-child(6) { animation-delay: 320ms; }
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* stagger children slightly when a group is revealed */
+.about-stats.in-view .stat,
+.skills-grid.in-view .skill-group,
+.projects-grid .project-card.in-view {
+  animation: none;
+}
+
+.stat {
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.stat:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+}
+
+.scroll-cue {
+  animation: float-y 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .scroll-cue {
+    animation: none;
+  }
+  .hero-signal span {
+    animation: none;
+  }
+}
